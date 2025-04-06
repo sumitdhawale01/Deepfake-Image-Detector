@@ -26,12 +26,18 @@ if model_files:
 else:
     st.error("❌ No .pt file found in the unzipped model folder.")
 
+# Define corrected labels
+corrected_labels = {
+    0: "Fake",
+    1: "Real"
+}
+
 # Upload image
 uploaded_image = st.file_uploader("📁 Upload an Image", type=["jpg", "jpeg", "png"])
 
 if uploaded_image is not None:
     image = Image.open(uploaded_image).convert("RGB")
-    st.image(image, caption="Uploaded Image", width=200)  # 👈 Adjusted image size here
+    st.image(image, caption="Uploaded Image", width=200)
 
     # Prediction button
     if st.button("Detect Deepfake"):
@@ -39,11 +45,12 @@ if uploaded_image is not None:
             results = model.predict(image)
 
         # Draw boxes on the image
-        result_image = results[0].plot()  # This plots bounding boxes
+        result_image = results[0].plot()
 
         # Convert to PIL Image and display
         result_pil = Image.fromarray(result_image[..., ::-1])  # BGR to RGB
-        st.image(result_pil, caption="Detection Result", width=200)  # 👈 Adjusted result image size here
+        st.image(result_pil, caption="Detection Result", width=200)
 
-        # Optional: Show label info
-        st.write("🔎 Detected Labels:", results[0].names)
+        # Show corrected label info
+        st.subheader("🔎 Detected Labels:")
+        st.json(corrected_labels)
