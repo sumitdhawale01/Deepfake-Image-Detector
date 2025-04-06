@@ -31,7 +31,7 @@ uploaded_image = st.file_uploader("📁 Upload an Image", type=["jpg", "jpeg", "
 
 if uploaded_image is not None:
     image = Image.open(uploaded_image).convert("RGB")
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", width=200)  # 👈 Adjusted image size here
 
     # Prediction button
     if st.button("Detect Deepfake"):
@@ -43,7 +43,7 @@ if uploaded_image is not None:
 
         # Convert to PIL Image and display
         result_pil = Image.fromarray(result_image[..., ::-1])  # BGR to RGB
-        st.image(result_pil, caption="Detection Result", use_column_width=True)
+        st.image(result_pil, caption="Detection Result", width=200)  # 👈 Adjusted result image size here
 
         # Optional: Show label info
         st.write("🔎 Detected Labels:", results[0].names)
