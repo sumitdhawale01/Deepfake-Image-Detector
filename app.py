@@ -26,12 +26,6 @@ if model_files:
 else:
     st.error("❌ No .pt file found in the unzipped model folder.")
 
-# Define corrected labels
-corrected_labels = {
-    0: "Fake",
-    1: "Real"
-}
-
 # Upload image
 uploaded_image = st.file_uploader("📁 Upload an Image", type=["jpg", "jpeg", "png"])
 
@@ -51,6 +45,5 @@ if uploaded_image is not None:
         result_pil = Image.fromarray(result_image[..., ::-1])  # BGR to RGB
         st.image(result_pil, caption="Detection Result", width=200)
 
-        # Show corrected label info
-        st.subheader("🔎 Detected Labels:")
-        st.json(corrected_labels)
+        # Removed label display line 👇
+        # st.write("🔎 Detected Labels:", results[0].names)
